@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alarm Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #f4f4f4;
+        }
+
+        #clock {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Alarm Clock</h1>
+
+    <div id="clock">00:00:00</div>
+
+    <input type="time" id="alarmTime">
+    <button onclick="setAlarm()">Set Alarm</button>
+
+    <p id="status"></p>
+
+    <audio id="alarmSound">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let alarmTime = null;
+
+        function updateClock() {
+            const now = new Date();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById("clock").innerText =
+                `${hours}:${minutes}:${seconds}`;
+
+            if (alarmTime === `${hours}:${minutes}`) {
+                document.getElementById("alarmSound").play();
+                alert("⏰ Alarm Time!");
+                alarmTime = null;
+            }
+        }
+
+        function setAlarm() {
+            alarmTime = document.getElementById("alarmTime").value;
+            document.getElementById("status").innerText =
+                "Alarm set for " + alarmTime;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+</body>
+</html>
